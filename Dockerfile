@@ -30,7 +30,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
     GOEXPERIMENT=${GOEXPERIMENT} \
     make alloy
 
-FROM public.ecr.aws/ubuntu/ubuntu:noble
+FROM registry.astralinux.ru/astra/ubi18
 
 # Username and uid for alloy user
 ARG UID=473
@@ -60,4 +60,4 @@ RUN chmod -R 770 /var/lib/alloy
 
 ENTRYPOINT ["/bin/alloy"]
 ENV ALLOY_DEPLOY_MODE=docker
-CMD ["run", "/etc/alloy/config.alloy", "--storage.path=/var/lib/alloy/data"]
+CMD ["run", "/var/lib/alloy/data/config.alloy", "--storage.path=/var/lib/alloy/data","--server.http.listen-addr=0.0.0.0:12345"]
